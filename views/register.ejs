@@ -1,0 +1,22 @@
+<%- include("header.ejs") %>
+
+
+<div id="log">
+
+    <h1>Kindly register to book an Event.....</h1>
+
+    <form  action="/register" method="post">
+    <input type="email" name="username" placeholder="Email"></input>
+    <input type="password" name="password" placeholder="password"></input>
+    <button>submit</button>
+    </form>
+
+     <a href="/auth/google"> Sign Up with Google</a>
+</div>
+
+
+
+<%- include("footer.ejs") %>
+<script src="main.js" charset="utf-8"></script>
+</body>
+</html>

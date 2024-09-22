@@ -1,0 +1,23 @@
+<%- include("header.ejs") %>
+
+<div>
+<h4>Hello <%= record.name %>, Kindly find your booking receipt below:</h4>
+</div>
+
+<div>
+    <% if(locals.record) {%>
+    <p>Phone number:<%= record.phone %></p>
+    <p>Address: <%= record.address %></p>
+    <p>City of Event: <%= record.cities %></p>
+    <p>Event Starts: <%= record.start_time %></p>
+    <p>Event Ends: <%= record.finish_time %></p>
+    <p>Event Note: <%= record.event_note %></p>
+    <% } %>
+</div>
+
+ <a href="/logout">Log Out</a>
+
+<script src="main.js" charset="utf-8"></script>
+<%- include("footer.ejs") %>
+</body>
+</html>

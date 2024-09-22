@@ -1,0 +1,141 @@
+<%- include("header.ejs") %>
+
+<div>
+    <% if(locals.message) {%>
+    <h1><%=message%></h1>
+    <% } %>
+</div>
+
+<div class="first">
+    <div class="text">
+      <h1>Contact Us</h1>
+
+    <p>
+   Kindly use the form below to contact us by booking an event today.
+    </p>
+
+      <h2>Event Reservation</h2>
+
+      <div class="reserv">
+        <form action="/form" method="post">
+
+          <div class="form-input">
+            <label>Name</label>
+            <input type="text" placeholder="Full Name" name="name"/>
+          </div>
+
+          <div class="form-input">
+            <label for="phone">Enter a phone number:</label>
+            <input type="tel"  name="phone" placeholder="123-45-678"  required>
+          </div>
+
+          <div class="form-input">
+            <label>Address</label>
+            <textarea rows="3" placeholder="Event Address" name="address"></textarea>
+        </div>
+
+          <div class="form-input">
+            <label for="city">Enter a City for Event:</label>
+            <input list="cities" name="cities">
+            <datalist id="cities">
+              <option value="Lagos">
+              <option value="Abuja">
+              <option value="Ibadan">
+              <option value="Awka">
+              <option value="Kano">
+                <option value="Port Harcourt">
+                  <option value="Nneyi-Umuleri">
+                  <option value="Onitsha">
+                  <option value="Maiduguri">
+                  <option value="Aba">
+                    <option value="Benin City">
+                      <option value="Shagamu">
+                      <option value="Ikare">
+                      <option value="Ogbomoso">
+                      <option value="Mushin">
+                        <option value="Owerri">
+                          <option value="Ikeja">
+                          <option value="Agege">
+                          <option value="Somolu">
+                          <option value="Sokoto">
+                            <option value="Nnewi">
+                              <option value="Ilesa">
+                              <option value="Minna">
+                              <option value="Apapa">
+                              <option value="Bida">
+                                <option value="Ilobu">
+                                  <option value="Ajegunle">
+                                  <option value="Oshodi">
+                                  <option value="Ifako">
+                                  <option value="Surulere">
+                                    <option value="Ebute-Metta">
+                                      <option value="Ojota">
+                                      <option value="Ikotun">
+                                      <option value="Makera">
+                                      <option value="Umundugba">
+                                        <option value="Ojo">
+                                          <option value="Okrika">
+                                          <option value="Uselu">
+                                          <option value="Kpor">
+                                          <option value="Neni">
+                                            <option value="Ozubulu">
+                                              <option value="Festac Town">
+                                              <option value="Buguma">
+                                              <option value="Hadejia">
+                                              <option value="Amaigbo">
+                                                <option value="Ungogo">
+                                                  <option value="Ikoyi">
+                                                  <option value="Effurun">
+                                                  <option value="Dikenafai">
+                                                  <option value="Kumbotso">
+                                                    <option value="Nnenasa">
+                                                      <option value="Ojoto">
+                                                      <option value="Rumuodomaya">
+                                                      <option value="Itu">
+                                                      <option value="Afor-Oru">
+                                                        <option value="Isinweke">
+                                                          <option value="Ogu">
+                                                          <option value="Nchia">
+                                                          <option value="Egbeda">
+                                                          <option value="Ukpo">
+                                                            <option value="Abagana">
+                                                              <option value="Suleja">
+                                                             
+            </datalist>
+          </div>
+
+          <div class="form-input">
+            <label for="Event Picker">Event Date</label>
+            <input type="date"  name="date"/>
+          </div>
+
+          <div class="form-input">
+            <label for="start_time">Event Start Time</label>
+            <input type="time"  name="start_time"/>
+          </div>
+
+          <div class="form-input">
+            <label for="finish_time">Event End Time</label>
+            <input type="time"  name="finish_time"/>
+          </div>
+
+          <div class="form-input">
+        <label>Event_Note</label>
+        <textarea rows="5" placeholder="Event type?" name="event_note"></textarea>
+      </div>
+
+      <div class="form-button">
+      <input type="submit" value= "Submit" id="submit"/>
+    </div>
+    </form>
+    </div>
+    </div>
+  <div>
+        <img src="img/contact.webp" alt="contact" />
+      </div>
+      </div>
+
+<%- include("footer.ejs") %>
+<script src="main.js" charset="utf-8"></script>
+</body>
+</html>
