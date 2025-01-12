@@ -1,23 +1,68 @@
 <%- include("header.ejs") %>
 
 <div>
-<h4>Hello <%= record.name %>, Kindly find your booking receipt below:</h4>
-</div>
+    
+  <% if (record.length > 0){%> 
+<h2>Hello <%=user.name%>, Thanks for the bookings, the status will be approved after payment.</h2>
 
-<div>
-    <% if(locals.record) {%>
-    <p>Phone number:<%= record.phone %></p>
-    <p>Address: <%= record.address %></p>
-    <p>City of Event: <%= record.cities %></p>
-    <p>Event Starts: <%= record.start_time %></p>
-    <p>Event Ends: <%= record.finish_time %></p>
-    <p>Event Note: <%= record.event_note %></p>
-    <% } %>
-</div>
+<h1>My Appointment</h1>
+       
+            <table> 
+              <thead>
+             <tr> 
+              <th>Name</th>
+              <th>Price</th>
+              <th>Date</th>
+              <th>Event_Starts</th>
+              <th>Ends</th>
+              <th>Status</th>
+              <th>Action 1</th>
+           
+             </tr>
+           </thead>
+           <tbody>
+            <tr>
+                <% record.forEach(entry =>{ %>
+                 <td><%= entry.name %></td>
+                 <td><%= entry.price %></td>
+                 <td><%= entry.appointment_date.toLocaleString()%></td>
+                 <td><%= entry.start_time%></td>
+                 <td><%= entry.end_time%></td>
+                 <td><%= entry.status%></td>
+                 <td><form>
+                    <button type="button">Cancel</button>
+                 </form></td>
+               </tr>
+            <%})  %>
+        </tbody>
+      </table>
+          <% }else{ %>
+            <p>Hello <%=user.name%>, You have no Appointments.</p>
+             
+         <% } %> 
+      
+    </div>
 
- <a href="/logout">Log Out</a>
 
-<script src="main.js" charset="utf-8"></script>
+
+    <h2> Weather Report for the Event</h2>
+   <div class="weatherr"> <% if (locals.error) {%>
+        <p><%= error %></p>
+        
+         <% } else if (locals.weather) { %>
+        
+         <p> <%= weather.main.temp %>&deg;F</p>
+         <p><%= weather.weather[0].main %></p>
+         <%=weather.name %> <%= weather.sys.country %>
+        
+         <%}%>
+         </div>
+
+
+     <div class="logout">
+        <a href="/test-logout">Log Out</a>
+      </div>
+      
 <%- include("footer.ejs") %>
 </body>
 </html>

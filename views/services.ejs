@@ -1,0 +1,39 @@
+<%- include("header.ejs") %>
+<div class="heroes">
+    <div class="overlay">
+        <h1>Dj with the magic fingers...</h1>
+    </div>
+    </div>
+
+  <h1>Kindly Book Our Services.</h1>
+    <div class="check" >
+      <div class="check_gran">
+      
+      <%  if (locals.services) {%>
+      <% services.forEach(service => { %>
+
+          <div class="content_wrapper">
+          <img  src="/uploads/<%= service.image_url %>" alt="<%= service.name%>"/>
+          <h3><%= service.name%></h3>
+          <p> <%= service.description%></p>
+          <p>₦<%= service.price %></p>
+
+          <a href="/services/<%= service.id%>/book">Book Event </a>
+         <% if(user && user.is_admin==true) {%>
+          <a href="/services/<%=service.id%>/edit">Edit</a>
+          <form action="/services/<%=service.id%>?_method=DELETE" method="post">
+          <button type="submit">Delete</button></form>
+         <% } %>
+        </div>
+          <% }) %>
+          <% }%>
+          
+ </div>
+  </div>
+    
+
+
+<%- include("footer.ejs") %>
+<script src="/scripts/main.js" charset="utf-8"></script>
+</body>
+</html>

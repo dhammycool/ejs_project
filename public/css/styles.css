@@ -12,6 +12,97 @@ body{
   padding-bottom: 100px;
 }
 
+.weather {
+  width:200px;
+  margin: auto;
+ padding: 10px;
+}
+
+.weather input{
+  padding-left: 50px;
+  margin-bottom: 20px;
+}
+
+table,th,td{
+  border:1px solid red;
+  border-radius:2px;
+  text-align: center;
+  margin: auto;
+}
+
+tr:nth-child(even){
+  background-color: #df2727;
+  color: white;
+}
+
+th{
+  background-color: #df2727;
+  color: #f5f5f5;
+}
+
+.admin_page{
+}
+
+.edit_page{
+  margin:auto;
+  width:200px;
+}
+
+.edit_page input, label{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  
+}
+.edit_button{
+  padding:10px;
+  border-radius: 30px;
+  background-color: #df2727;
+  color: #f5f5f5;
+  font-weight: 200;
+}
+
+#err{
+  color:red;
+}
+
+.weatherr{
+  width:200px ;
+  border:2px solid red;
+  margin: auto;
+  border-radius: 10px;
+  color:#df2727;
+  padding: 20px;
+}
+
+.serv_parent{
+  width:500px;
+  padding: 20px;
+  height:auto;
+  border: 2px solid black;
+  margin: auto;
+}
+
+.serv_parent div{
+  margin-bottom: 20px;
+}
+
+.logout{
+
+  margin: 20px 0px 20px 0px;
+}
+
+.admin_page{
+  width:800px;
+  padding:100px 0px 100px 0px;
+  text-align: center;
+}
+
+.report_page{
+  padding:100px 0px 100px 0px;
+  text-align: center;
+}
+
+
 .change img{
 float:left;
 margin-right: 50px;
@@ -28,6 +119,16 @@ margin-right: 50px;
 
 #log input{
   margin-bottom: 10px;
+  border-color: #df2727;
+  padding: 20px;
+  border-radius: 30px;
+}
+
+#log button{
+  padding: 10px;
+  border: 1px solid red;
+  font-weight: bold;
+  border-radius: 30px;
 }
 
 #log h1{
@@ -83,8 +184,8 @@ align-items: center;
   background-position: center;
   padding:200px 0;
   border-bottom: 8px solid transparent;
-    border-image: linear-gradient(0.25turn, rgba(255,249,34), rgba(255,0,128), rgba(56,2,155,0),rgba(255,249,34));
-    border-image-slice: 1;
+  border-image: linear-gradient(0.25turn, rgba(255,249,34), rgba(255,0,128), rgba(56,2,155,0),rgba(255,249,34));
+   border-image-slice: 1;
 
 }
 
@@ -102,7 +203,6 @@ margin: auto;
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(400px,1fr));
   background: linear-gradient(90deg, rgba(251,73,63,1) 3%, rgba(148,84,187,1) 45%, rgba(176,80,165,1) 60%, rgba(252,70,107,1) 100%);
-
   margin-top: 100px;
 }
 .text{
@@ -113,21 +213,61 @@ margin: auto;
   text-align: left;
 }
 
+.check{
+  padding-top:200px ;
+  padding-bottom: 200px;
+}
 
 .event{
   grid-gap: 20px;
-  padding: 50px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px,1fr));
 
   }
 
 .recent{
-
-border: 2px solid transparent;
+border: 3px solid transparent;
 border-image: linear-gradient(0.25turn, rgba(255,249,34), rgba(255,0,128), rgba(56,2,155,0),rgba(34,249,255));
 border-image-slice: 1;
 }
+
+.check{
+  padding: 10px;
+  margin-bottom: 40px;
+}
+.check h1{
+  margin-bottom: 20p;
+}
+
+.check_gran{
+  grid-gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+
+}
+
+.content_wrapper{
+  border-bottom:5px solid red;
+  color: #df2727;
+  font-weight: bold;
+  text-align: center;
+
+}
+
+.content_wrapper a{
+  width: 150px;
+  height: auto;
+  text-decoration: none;
+  display: block;
+  border: 2px solid red;
+  padding:20px;
+  border-radius: 10px;
+ margin-left: 30%;
+ margin-bottom: 20px;
+  background-color: #df2727;
+  color: white;
+}
+
 
 .text h1{
   margin-bottom:8px;
@@ -167,6 +307,102 @@ border-image-slice: 1;
   margin-bottom: 0;
 }
 
+.form_parent{
+  width: 100%;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  text-align: center;
+}
+
+.form_container{
+  margin: auto;
+  display:grid;
+  border-radius: 3px;
+  text-align: left;
+  background: #df2727;
+  color: #f5f5f5;
+}
+
+.form_container label{
+  text-align: left;
+  font-weight: bold;
+}
+.form_container input{
+  border-radius: 10px;
+}
+
+.form_container button{
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+.message {
+   margin-right: 2em; 
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+ margin-right:2em;
+}
+
+.message > textarea {
+ flex: 1; 
+ min-width: 18em;
+
+
+}
+
+.contact {
+   flex: 1; 
+   text-align: justify;
+   width: 100%;
+   margin-left: 20px;
+   text-align:center ;
+}
+
+
+.contact input {
+  border-right: 1px solid transparent;
+  width: 70%;
+  margin-right: 20%;
+}
+.contact input,
+.contact button {
+  padding: 1em;
+  margin-bottom: 1em;
+}
+.contact button {
+ color: white;
+ background: gray;
+ border: 0;
+ width: 76%;
+
+}
+
+.contact textarea{
+  height:50px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+
+.contact textarea{
+  border-bottom: 1px solid transparent;
+  width: 42%;
+}
+
+.confirm_gran{
+  text-align: center;
+  color: #df2727;
+
+}
+
+.confirm_parent{
+  width:400px;
+  padding: 20px;
+  margin: auto;
+  
+}
+
 
 .media{
   margin: 0 auto;
@@ -175,6 +411,10 @@ border-image-slice: 1;
   display:flex;
   justify-content:space-around;
   align-content: center;
+    }
+
+    img{
+      border-radius: 30px;
     }
 
 .social h1{
@@ -275,14 +515,9 @@ hr{
   list-style: none;
 }
 
-.port a{
-  color: white;
-  text-align: left;
-  text-decoration: none;
+.port li{
   padding-right: 35px;
-}
-.port a:hover{
-  color:grey;
+font-weight: bold;
 }
 
 .contact{

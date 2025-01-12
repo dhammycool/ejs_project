@@ -1,0 +1,35 @@
+<%- include("header.ejs") %>
+<div class="heroes">
+    <div class="overlay">
+        <h1>Dj with the magic fingers...</h1>
+    </div>
+    </div>
+<div class="confirm_gran">
+    <div class="confirm_parent">
+        <% if(locals.message) {%>
+            <h6> <%=message%></h6>
+            <% } %>
+    </div>
+
+    <div>
+        <% if(locals.appointment) {%>
+         <h1>Pay for Service</h1>
+         <p>Service : <%= appointment.name %></p>
+         <p> Service Price : <%= appointment.price%></p>
+        <h3>Kindly enter your Bank card details for Payment.</h3>
+        <form action="/payment" method="post">
+        <input type="text" id="<%= appointment.id %>" value="<%= appointment.id %>"/>
+        </form>
+        <%}%>
+    </div>
+
+</div>
+   
+    
+
+
+
+<%- include("footer.ejs") %>
+<script src="/scripts/main.js" charset="utf-8"></script>
+</body>
+</html>

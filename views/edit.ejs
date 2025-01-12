@@ -1,0 +1,37 @@
+<%- include("header.ejs") %>
+
+    <div class="services">
+      <h1>Update Services</h1>
+      
+      <div class="serv_parent">
+      <form action="/services/<%=service.id%>?_method=put" method="post" enctype="multipart/form-data">
+        <div>
+          <label for="name">Service Name:</label>
+          <input type="text" name="name"  value="<%=service.name%>" required>
+        </div>
+       
+    <div>
+      <label for="description">Description:</label>
+      <textarea   name="description" rows="5" cols="30"><%=service.description%></textarea>
+    </div>
+        
+    <div>
+      <label for="image">Select Image</label>
+      <input type="file"  name="serviceImage"  accept="image/*" required>
+      <img src="/uploads/<%= service.image_url %>" alt="<%=service.name%>">
+    </div>
+    <input type="hidden"  name="old_image" value="<%= service.image_url %>">
+       <div>
+        <label for="price">Service Price :</label>
+        <input type="number"  name="price" value="<%= service.price %>" required step="0.01" min="0">
+       </div>
+        <button type="submit">Update</button>
+
+      </form>
+
+      </div>
+      </div>
+
+
+
+      <%- include("footer.ejs") %>

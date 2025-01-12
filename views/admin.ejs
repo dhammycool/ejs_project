@@ -1,0 +1,18 @@
+<%- include("header.ejs") %>
+
+<div class="heroes">
+    <div class="overlay">
+        <h1>Dj with the magic fingers...</h1>
+    </div>
+  </div>
+
+<div id="log">
+    <h1>Kindly login to book an Event...</h1>
+    <form action="/admins" method="post">
+    <input type="email" name="username" placeholder="Email"></input>
+    <input type="password" name="password" placeholder="password"></input>
+    <button>submit</button>
+    </form>
+</div>
+
+<%- include("footer.ejs") %>
