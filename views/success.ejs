@@ -1,0 +1,18 @@
+<%- include("header.ejs") %>
+  <div class="heroes">
+    <div class="overlay">
+        <h1>Dj with the magic fingers...</h1>
+    </div>
+  </div>
+
+  <h2>✅ Payment Successful!</h2>
+<p ><strong>Amount:</strong> <%= amount %> <%= currency %></p>
+<p><strong>Status:</strong> <%= status %></p>
+<p><strong>Payment ID:</strong> <%= payment_id %></p>
+  <a href="http://localhost:3000/receipt">
+    <button>View Receipt</button>
+  </a>
+
+  <%- include("footer.ejs") %>
+</body>
+</html>

@@ -11,13 +11,11 @@
     <p>Kindly use the form below to book any kind of event with us today.</p>
 
     <div class="form_container">
-      
-   <%  if(locals.service) {%>
 
-      <form action="/services/<%= service.id%>" method="post">
-      
+      <form action="/bookings" method="post">
         <div class="contact">
-         
+         <input type="hidden" name="service_id" value="<%= service.id %>">
+         <input type="hidden" name="user_id" value="<%= user.id %>">
           <label for="phone">Enter a phone number:</label>
           <input type="tel"  name="phone"   required>
           <label>Address</label>
@@ -109,7 +107,7 @@
       </div>
       </div>
 
-  <% } %> 
+
 
   
 <%- include("footer.ejs") %>

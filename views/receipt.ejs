@@ -1,68 +1,75 @@
 <%- include("header.ejs") %>
 
 <div>
-    
-  <% if (record.length > 0){%> 
-<h2>Hello <%=user.name%>, Thanks for the bookings, the status will be approved after payment.</h2>
+    <h2> Hello <%= userName %>, Thanks for your Patronage.</h2>
 
-<h1>My Appointment</h1>
-       
+    <h4>My Appointment</h4>
+    <div id="user_page">
+        <% if (record.length > 0) { %> 
             <table> 
-              <thead>
-             <tr> 
-              <th>Name</th>
-              <th>Price</th>
-              <th>Date</th>
-              <th>Event_Starts</th>
-              <th>Ends</th>
-              <th>Status</th>
-              <th>Action 1</th>
-           
-             </tr>
-           </thead>
-           <tbody>
-            <tr>
-                <% record.forEach(entry =>{ %>
-                 <td><%= entry.name %></td>
-                 <td><%= entry.price %></td>
-                 <td><%= entry.appointment_date.toLocaleString()%></td>
-                 <td><%= entry.start_time%></td>
-                 <td><%= entry.end_time%></td>
-                 <td><%= entry.status%></td>
-                 <td><form>
-                    <button type="button">Cancel</button>
-                 </form></td>
-               </tr>
-            <%})  %>
-        </tbody>
-      </table>
-          <% }else{ %>
-            <p>Hello <%=user.name%>, You have no Appointments.</p>
-             
-         <% } %> 
-      
+                <thead>
+                    <tr> 
+                        <th>Appointmnet ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Event Starts</th>
+                        <th>Ends</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% record.forEach(entry => { %>
+                        <tr>
+                            <td><%= entry.id %></td>
+                            <td><%= entry.name %></td>
+                            <td><%= entry.price %></td>
+                            <td><%= entry.appointment_date.toLocaleString() %></td>
+                            <td><%= entry.start_time %></td>
+                            <td><%= entry.end_time %></td>
+                            <td><%= entry.status %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>Hello <%= userName %>, You have no Appointments.</p>
+        <% } %> 
     </div>
 
+    <h2>Payment History</h2>
+    <div>
+        <% if (payments.length > 0) { %>
+            <table> 
+                <thead>
+                    <tr>
+                        <th>Appointment ID</th> 
+                        <th>Payment ID</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% payments.forEach(pay => { %>
+                        <tr>
+                            <td><%= pay.appointment_id %></td>
+                            <td><%= pay.payment_id %></td>
+                            <td>NGN <%= parseFloat(pay.amount).toLocaleString() %></td>
+                            <td><%= pay.payment_method %></td>
+                            <td><%= pay.payment_status %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No payments found.</p>
+        <% } %>
+    </div>
 
+    <a href="/logout"><button>Logout</button></a>
+</div>
 
-    <h2> Weather Report for the Event</h2>
-   <div class="weatherr"> <% if (locals.error) {%>
-        <p><%= error %></p>
-        
-         <% } else if (locals.weather) { %>
-        
-         <p> <%= weather.main.temp %>&deg;F</p>
-         <p><%= weather.weather[0].main %></p>
-         <%=weather.name %> <%= weather.sys.country %>
-        
-         <%}%>
-         </div>
-
-
-     <div class="logout">
-        <a href="/test-logout">Log Out</a>
-      </div>
-      
 <%- include("footer.ejs") %>
 </body>
 </html>

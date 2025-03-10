@@ -1,24 +1,27 @@
 <%- include("header.ejs") %>
-
-<div class="admin_page">
-    <h3>Manage Appointments</h3>
+<div>
+  <h3 >Hello <%=userName%>, Your Clients Booking Report.</h3>
+  <div>
+    <a href="/logout"><button>Logout</button></a>
+    <div id="user_pagee">
     <% if (record.length > 0){%> 
         <table> 
           <thead>
          <tr>
+        
           <th>User</th>
           <th>Service</th>
-          <th>Price</th>
-          <th>Email</th>
+          <th>Amount</th>
+          <th>Status</th>
           <th>Tel</th>
-          <th> Date</th>
+          <th>Event_Date</th>
           <th>City</th>
           <th>Addr</th>
           <th>Starts</th>
-          <th>End</th>
-          <th> Music</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th>Ends_At</th>
+          <th>Music</th>
+          
+          
          </tr>
        </thead>
        <tbody>
@@ -27,7 +30,7 @@
              <td><%= entry.user_name %></td>
              <td><%= entry.name %></td>
              <td><%= entry.price %></td>
-             <td><%= entry.email %></td>
+             <td><%= entry.status%></td>
              <td><%= entry.appointment_mobile%></td>
              <td><%= entry.appointment_date.toLocaleString()%></td>
              <td><%= entry.appointment_city%></td>
@@ -35,16 +38,7 @@
              <td><%= entry.start_time%></td>
              <td><%= entry.end_time%></td>
              <td><%= entry.music_desc%></td>
-             <td><%= entry.status%></td>
-             <td>
-              <%if (entry.status=== 'pending'){%>
- 
-                <form action="/record/<%=entry.id%>?_method=put" method="POST">
-                  <button type="submit">Approve</button>
-               </form>
-             <% } %> 
-            
-            </td>
+          
            </tr>
         <%})  %>
     </tbody>
@@ -53,6 +47,7 @@
         <p>You have no Appointments.</p>
          
      <% } %> 
+      </div>
 </div>
 
 <div class="services">

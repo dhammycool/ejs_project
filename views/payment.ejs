@@ -4,32 +4,51 @@
         <h1>Dj with the magic fingers...</h1>
     </div>
     </div>
+
+
 <div class="confirm_gran">
     <div class="confirm_parent">
         <% if(locals.message) {%>
-            <h6> <%=message%></h6>
+            <h3> <%=message%></h3>
             <% } %>
     </div>
-
-    <div>
-        <% if(locals.appointment) {%>
-         <h1>Pay for Service</h1>
-         <p>Service : <%= appointment.name %></p>
-         <p> Service Price : <%= appointment.price%></p>
-        <h3>Kindly enter your Bank card details for Payment.</h3>
-        <form action="/payment" method="post">
-        <input type="text" id="<%= appointment.id %>" value="<%= appointment.id %>"/>
-        </form>
-        <%}%>
-    </div>
-
 </div>
-   
+
+
+
+  <div class="payee">
+    <h2>Enter Your Card Details</h2>
     
+  
+        <form id="payment-form"> 
 
+            <input class="Element" id="appoint" type="hidden" name="booking_id" value="<%=appointments.appointment_id %>"> 
+           
+            <label for="service_name">Service Name</label>
+            <input type="text"  class="Element" id="service_name"  name="service_name" value="<%=appointments.service_name%>" readonly>
+              
+           
+            <label for="price">Service Amount</label>
+            <input class="Element" id="amount"  type="text" name="price" value="<%=appointments.service_price%> "readonly>
+            
+         <div id="payment-element">
 
+         </div>
+       
+        <button type="submit" id="checkout-button">Pay Now</button>
+        <div id="general-error" class="error-message" style="display: none; color: red;"></div>
+        <div id="card-declined-error" class="error-message" style="display: none; color: red;"></div>
+        <div id="cvc-error" class="error-message" style="display: none; color: red;"></div>
+        <div id="insufficient-funds-error" class="error-message" style="display: none; color: red;"></div>
+        <div id="auth-error" class="error-message" style="display: none; color: red;"></div>
+        
+       
+     </form>
+  </div>
 
 <%- include("footer.ejs") %>
-<script src="/scripts/main.js" charset="utf-8"></script>
-</body>
-</html>
+
+
+
+
+
