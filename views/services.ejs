@@ -16,7 +16,7 @@
           <img  src="/uploads/<%= service.image_url %>" alt="<%= service.name%>"/>
           <h3><%= service.name%></h3>
           <p> <%= service.description%></p>
-          <p>₦<%= service.price %></p>
+          <p>₦<%=  parseFloat(service.price).toLocaleString()%></p>
 
           <a href="/services/<%= service.id%>/book">Book Event </a>
          <% if(user && user.is_admin==true) {%>

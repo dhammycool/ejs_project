@@ -7,10 +7,11 @@
 
 <div id="log">
     <h1>User/Admin login</h1>
-    <% if(locals.regErr){%>
-        <p><%= regErr %></p>
-   <% } %> 
+  
     <form action="/login" method="post">
+        <%if(locals.error){%>
+            <h5> <%= error %></h5>
+        <% }%></div>
     <input type="email" name="username" placeholder="Email"></input>
     <input type="password" name="password" placeholder="password"></input>
     <button>submit</button>

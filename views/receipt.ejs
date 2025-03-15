@@ -2,9 +2,12 @@
 
 <div>
     <h2> Hello <%= userName %>, Thanks for your Patronage.</h2>
+</div>
+
 
     <h4>My Appointment</h4>
-    <div id="user_page">
+
+    <div id="user_pagee">
         <% if (record.length > 0) { %> 
             <table> 
                 <thead>
@@ -38,7 +41,7 @@
     </div>
 
     <h2>Payment History</h2>
-    <div>
+    <div id="history">
         <% if (payments.length > 0) { %>
             <table> 
                 <thead>
@@ -68,7 +71,7 @@
     </div>
 
     <a href="/logout"><button>Logout</button></a>
-</div>
+
 
 <%- include("footer.ejs") %>
 </body>

@@ -1,6 +1,8 @@
 
     document.addEventListener("DOMContentLoaded", async () => {
-      const stripe = Stripe("pk_test_51QfSZvGzl6v4hn3sPfn2SIluL1MErCygtzSYEOlonBSB2cQ2eDXv5yHSqNGC01Xai8IeB9GaurWxkDnkauFq8RH000Qoew6ZO5");
+        const stripe = Stripe("pk_test_51QfSZvGzl6v4hn3sPfn2SIluL1MErCygtzSYEOlonBSB2cQ2eDXv5yHSqNGC01Xai8IeB9GaurWxkDnkauFq8RH000Qoew6ZO5");
+
+    
       const appointment_id = document.getElementById("appoint")?.value || "";
       const amount = parseInt(document.getElementById("amount")?.value.trim(), 10);
   
