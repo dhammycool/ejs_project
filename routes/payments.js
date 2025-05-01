@@ -1,12 +1,24 @@
 import express from "express";
-import { createPaymentIntent, handleWebhook } from "../controllers/paymentController.js";
+import { createPaymentIntent, handleWebhook } from "../controllers/paymentControllers.js";
 
-const router = express.Router();
 
-// Payment Intent Route
-router.post("/create-payment-intent", express.json(), createPaymentIntent);
+const paymentRouter = express.Router();
 
-// Webhook Route (must use raw body)
-router.post("/webhook", express.raw({ type: "application/json" }), handleWebhook);
 
-export default router;
+
+paymentRouter.post("/create-payment-intent", createPaymentIntent);
+
+paymentRouter.post("/webhook", express.raw({ type: "application/json" }), handleWebhook);
+
+
+
+export default paymentRouter;
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
     "dotenv": "^16.4.5",
@@ -34,7 +35,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "y"
+    "test": "y",
+    "start:dev": "cross-env NODE_ENV=development  node app.js"
   },
   "repository": {
     "type": "git",
@@ -44,5 +46,8 @@
     "y"
   ],
   "author": "dammy",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
 }

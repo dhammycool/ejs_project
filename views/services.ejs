@@ -18,22 +18,67 @@
           <p> <%= service.description%></p>
           <p>₦<%=  parseFloat(service.price).toLocaleString()%></p>
 
-          <a href="/services/<%= service.id%>/book">Book Event </a>
-         <% if(user && user.is_admin==true) {%>
-          <a href="/services/<%=service.id%>/edit">Edit</a>
-          <form action="/services/<%=service.id%>?_method=DELETE" method="post">
-          <button type="submit">Delete</button></form>
+          <a href="/get/services/<%= service.id%>/book">Book Event </a>
+
+         <% if(user && user.is_admin==true) {%> 
+
+
+          <a href="/get/services/<%=service.id%>/edit">Edit</a>
+
+
+          <form action="/get/services/<%=service.id%>?_method=DELETE" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit">Delete</button>
+        </form>
+
          <% } %>
+
         </div>
+
           <% }) %>
+
           <% }%>
           
  </div>
   </div>
     
+  <% if(user && user.is_admin==true) {%> 
+    <div class="services">
 
+      <h1>Creat Posts</h1>
+      <div class="serv_parent">
+        
+      <form action="/get/show" method="post" enctype="multipart/form-data">
+  
+        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+        
+        <div>
+          <label for="name">Service Name:</label>
+          <input type="text" id="serv_name" name="name" required>
+        </div>
+       
+    <div>
+      <label for="description">Description:</label>
+      <textarea row="5" id="serv_description" name="description" required></textarea>
+    </div>
+        
+    <div>
+      <label for="image">Service_image:</label>
+      <input type="file" id="serv_image" name="serviceImage" accept="image/*" required>
+    </div>
+       <div>
+        <label for="price">Service Price :</label>
+        <input type="number" id="serv_price" name="price" required step="0.01" min="0">
+       </div>
+        <button type="submit">Add Service</button>
+      </form>
+      </div>
+      </div>
+       
+
+    <%}%>
+    
 
 <%- include("footer.ejs") %>
-<script src="/scripts/main.js" charset="utf-8"></script>
 </body>
 </html>

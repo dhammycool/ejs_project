@@ -1,14 +1,17 @@
+import express from "express";
+import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
-import db from "../config/db.js";  // Import database connection
+import db from "../config/db.js";  
+import logger from "../middlewares/logger.js";
 
 passport.use(new Strategy(async function verify(username, password, cb) {
     try {
-        // Fetch user from the database
+    
         const check = await db.query("SELECT * FROM users WHERE email=$1", [username]);
 
-        // If user is not found
+      
         if (check.rows.length === 0) {
             return cb(null, false, { message: "User does not exist. Please register!" });
         }
@@ -16,19 +19,37 @@ passport.use(new Strategy(async function verify(username, password, cb) {
         const user = check.rows[0];
         const storedPassword = user.password;
 
-        // Compare hashed passwords using await
+        
         const isMatch = await bcrypt.compare(password, storedPassword);
         
         if (isMatch) {
-            return cb(null, user);  // User authenticated
+            return cb(null, user);  
         } else {
             return cb(null, false, { message: "Incorrect password" });
         }
 
     } catch (err) {
-        console.error("Authentication error:", err);
+        logger.info("Authentication error:", err);
         return cb(null, false, { message: "An error occurred during authentication. Please try again." });
     }
 }));
+
+
+passport.serializeUser((user,cb)=>{
+    cb(null,user.id);
+
+});
+
+passport.deserializeUser(async (id, cb) => {
+    try {
+        const result = await db.query("SELECT * FROM users WHERE id = $1", [id]);
+        if (result.rows.length === 0) {
+            return cb(null, false); 
+        }
+        cb(null, result.rows[0]);
+    } catch (err) {
+        cb(err);
+    }
+});
 
 export default passport;

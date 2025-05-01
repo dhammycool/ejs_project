@@ -1,20 +1,40 @@
 
+    
+    
     document.addEventListener("DOMContentLoaded", async () => {
+
+        if (!document.getElementById("payment-form")) {
+            return;
+        }
+
         const stripe = Stripe("pk_test_51QfSZvGzl6v4hn3sPfn2SIluL1MErCygtzSYEOlonBSB2cQ2eDXv5yHSqNGC01Xai8IeB9GaurWxkDnkauFq8RH000Qoew6ZO5");
 
     
       const appointment_id = document.getElementById("appoint")?.value || "";
       const amount = parseInt(document.getElementById("amount")?.value.trim(), 10);
-  
-   
-      console.log("📨 Sending data:", { appointment_id, amount });
-  
+
+      if (!amount || isNaN(amount)) {
+        console.error("🚨 No valid amount found!");
+        return;
+    }
+
+    console.log("📨 Sending data:", { appointment_id, amount });
     
+  
       try {
-          const response = await fetch("https://9ff8-2a02-c7c-86ce-d800-942-2883-4410-5006.ngrok-free.app/create-payment-intent", {
+          const response = await fetch("https://9e9f-2a02-c7c-86ce-d800-c199-3136-4ae8-b877.ngrok-free.app/payments/create-payment-intent", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ appointment_id, amount, currency: "ngn" }),
+              headers: { 
+                "Content-Type": "application/json",
+                "CSRF-TOKEN":document.querySelector('#payment-form input[name="_csrf"').value,
+                
+             },
+              body: JSON.stringify({ 
+                appointment_id,
+                 amount,
+                  currency: "ngn"
+                 }),
+            
           });
   
           if (!response.ok) {
@@ -23,7 +43,7 @@
   
           const { clientSecret } = await response.json();
 
-          console.log("✅ Received Client Secret:", clientSecret);
+         
 
           if (!clientSecret) {
               throw new Error("No client secret received");
@@ -42,16 +62,16 @@
               event.preventDefault();
   
               const { error, paymentIntent } = await stripe.confirmPayment({
-                  elements,
-                  confirmParams: {
-                      return_url: "https://9ff8-2a02-c7c-86ce-d800-942-2883-4410-5006.ngrok-free.app/payment-success?payment_intent=${paymentIntent.id}",
+                   elements,
+                   confirmParams: {
+                      return_url:`https://9e9f-2a02-c7c-86ce-d800-c199-3136-4ae8-b877.ngrok-free.app/payment-success`,
                   },
               });
 
           
             if (paymentIntent && paymentIntent.status === "succeeded") {
-                console.log("✅ Payment succeeded, redirecting...");
-                window.location.href = `/payment-success?payment_intent=${paymentIntent.id}`;
+                logger.info("✅ Payment succeeded, redirecting...");
+                window.location.href = `/get/payment-success?payment_intent=${paymentIntent.id}`;
                 return;
             }
             
@@ -109,8 +129,10 @@
             console.error("❌ Unexpected Error:", err);
             document.querySelector("#payment-error").innerText = "An unexpected error occurred. Please try again.";
         }
+
+     
   });
   
-       
+
            
     

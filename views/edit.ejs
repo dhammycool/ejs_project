@@ -4,7 +4,8 @@
       <h1>Update Services</h1>
       
       <div class="serv_parent">
-      <form action="/services/<%=service.id%>?_method=put" method="post" enctype="multipart/form-data">
+      <form action="/get/services/<%=service.id%>?_method=put" method="post" enctype="multipart/form-data">
+       
         <div>
           <label for="name">Service Name:</label>
           <input type="text" name="name"  value="<%=service.name%>" required>
@@ -17,7 +18,7 @@
         
     <div>
       <label for="image">Select Image</label>
-      <input type="file"  name="serviceImage"  accept="image/*" required>
+      <input type="file"  name="serviceImage"  accept="image/*">
       <img src="/uploads/<%= service.image_url %>" alt="<%=service.name%>">
     </div>
     <input type="hidden"  name="old_image" value="<%= service.image_url %>">

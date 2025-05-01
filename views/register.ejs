@@ -4,16 +4,14 @@
         <h1>Dj with the magic fingers...</h1>
     </div>
   </div>
-
+  <div id="err">
+    <%if(locals.regError){%>
+       <h5> <%= regError %></h5>
+   <% }%></div>
 <div id="log">
-
     <h1>Kindly register to book an Event.</h1>
-    <form  action="/register" method="post">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <div id="err">
-        <%if(locals.regError){%>
-           <h5> <%= regError %></h5>
-       <% }%></div>
+    <form id="forms" action="/auth/register" method="post">
+        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
     <input type="text" name="name" placeholder="Full Name" required></input>
     <input type="email" name="username" placeholder="Email" required></input>
     <input type="password" name="password" placeholder="password" required></input>
@@ -24,6 +22,5 @@
 
 
 <%- include("footer.ejs") %>
-<script src="main.js" charset="utf-8"></script>
 </body>
 </html>

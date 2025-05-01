@@ -7,7 +7,7 @@ const logger = createLogger({
         format.json()
     ),
     transports: [
-        new transports.File({ filename: "security.log" }),  // Save to file
+        new transports.File({ filename: "security.log" }),  
         new transports.Console(), 
     ],
 });

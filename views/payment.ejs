@@ -21,7 +21,7 @@
     
   
         <form id="payment-form"> 
-
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
             <input class="Element" id="appoint" type="hidden" name="booking_id" value="<%=appointments.appointment_id %>"> 
            
             <label for="service_name">Service Name</label>

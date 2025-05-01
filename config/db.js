@@ -1,7 +1,12 @@
 import env from "dotenv";
+import pg from "pg";
+import logger from "../middlewares/logger.js"
+
+
 env.config();
 
-import pg from "pg";
+
+
 
 const db= new pg.Client({
     user:process.env.PG_USER,
@@ -15,9 +20,9 @@ const db= new pg.Client({
 (async () => {
     try {
       await db.connect();
-      console.log("Database connected successfully.");
+      logger.info("Database connected successfully.");
     } catch (error) {
-      console.error("Database connection error:", error);
+      logger.info("Database connection error:", error);
       process.exit(1);
     }
   })();

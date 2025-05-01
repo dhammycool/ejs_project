@@ -4,14 +4,15 @@
         <h1>Dj with the magic fingers...</h1>
     </div>
   </div>
-
+  <%if(locals.regError){%>
+    <h5> <%= regError %></h5>
+<% }%></div>
+  <%if(locals.error){%>
+    <h5> <%= error %></h5>
+<% }%></div>
 <div id="log">
     <h1>User/Admin login</h1>
-  
-    <form action="/login" method="post">
-        <%if(locals.error){%>
-            <h5> <%= error %></h5>
-        <% }%></div>
+    <form action="/auth/login" method="post">
     <input type="email" name="username" placeholder="Email"></input>
     <input type="password" name="password" placeholder="password"></input>
     <button>submit</button>
@@ -19,6 +20,6 @@
 </div>
 
 <%- include("footer.ejs") %>
-<script src="main.js" charset="utf-8"></script>
+
 </body>
 </html>

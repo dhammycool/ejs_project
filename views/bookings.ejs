@@ -12,7 +12,8 @@
 
     <div class="form_container">
 
-      <form action="/bookings" method="post">
+      <form action="/get/bookings" method="post">
+        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
         <div class="contact">
          <input type="hidden" name="service_id" value="<%= service.id %>">
          <input type="hidden" name="user_id" value="<%= user.id %>">
@@ -107,10 +108,7 @@
       </div>
       </div>
 
-
-
   
 <%- include("footer.ejs") %>
-<script src="main.js" charset="utf-8"></script>
 </body>
 </html>
