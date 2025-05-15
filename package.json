@@ -37,13 +37,14 @@
   "type": "module",
   "scripts": {
     "test": "y",
+    "start":"node index.js",
     "start:dev": "cross-env NODE_ENV=development  node app.js"
   },
   "repository": {
     "type": "git",
     "url": "y"
   },
-  "keywords": [
+  "keywords":[
     "y"
   ],
   "author": "dammy",
