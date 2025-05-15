@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer"; 
-import db from "../config/db.js"; 
+import pool from "../config/db.js"; 
 import logger from "../middlewares/logger.js";
 
 
@@ -79,24 +79,24 @@ export const handleWebhook = async (req, res) => {
 
         try {
 
-            const exist= await db.query("SELECT * FROM payments WHERE payment_id=$1",[payment_id]);
+            const exist= await pool.query("SELECT * FROM payments WHERE payment_id=$1",[payment_id]);
             if(exist.rows.length>0){
                 logger.info("Payment already inserted, check other codes");
                 res.status(200).send({success:true});
             }
             
-            await db.query(
+            await pool.query(
                 "INSERT INTO payments (appointment_id, payment_id, payment_method, amount, payment_status) VALUES($1, $2, $3, $4, $5)",
                 [appointment_id, payment_id, payment_method, amount, status]
             );
 
             logger.info("payment inserted successfully");
             
-            await db.query("UPDATE appointments SET status ='success' WHERE id = $1", [appointment_id]);
+            await pool.query("UPDATE appointments SET status ='success' WHERE id = $1", [appointment_id]);
 
             logger.info(`✅ Payment status updated to Confirmed for appointment ${appointment_id}`);
 
-            const result = await db.query(
+            const result = await pool.query(
                 `SELECT a.id, u.email, u.name
                 FROM appointments a 
                 JOIN users u ON a.user_id = u.id
@@ -143,7 +143,7 @@ export const handleWebhook = async (req, res) => {
     } else if (eventType === "payment_intent.payment_failed") {
         const appointment_id = paymentIntent.metadata.appointment_id;
 
-        await db.query("UPDATE appointments SET status = 'Pending' WHERE id = $1", [appointment_id]);
+        await pool.query("UPDATE appointments SET status = 'Pending' WHERE id = $1", [appointment_id]);
         res.status(200).json({ success: false, message: "Payment failed", appointment_id });
         return;
     } else {

@@ -1,5 +1,5 @@
 
-    
+import logger from "../middlewares/logger.js";
     
     document.addEventListener("DOMContentLoaded", async () => {
 
@@ -14,11 +14,11 @@
       const amount = parseInt(document.getElementById("amount")?.value.trim(), 10);
 
       if (!amount || isNaN(amount)) {
-        console.error("🚨 No valid amount found!");
+        logger.info("🚨 No valid amount found!");
         return;
     }
 
-    console.log("📨 Sending data:", { appointment_id, amount });
+    logger.info("📨 Sending data:", { appointment_id, amount });
     
   
       try {
@@ -76,7 +76,7 @@
             }
             
             if (paymentIntent && paymentIntent.status === "requires_payment_method") {
-                console.error("❌ Payment failed:", paymentIntent);
+                logger.info("❌ Payment failed:", paymentIntent);
             
                 document.querySelector("#general-error").innerText =
                     "Payment failed. Please try again with a different card.";
@@ -84,10 +84,10 @@
                 return;
             }
             if (error) {
-                console.error("❌ Payment Error:", error);
-                console.log("🔍 Error Type:", error.type);
-                console.log("🔍 Error Code:", error.code);
-                console.log("🔍 Error Message:", error.message);
+                logger.info("❌ Payment Error:", error);
+                logger.info("🔍 Error Type:", error.type);
+                logger.info("🔍 Error Code:", error.code);
+                logger.info("🔍 Error Message:", error.message);
             
                 document.querySelectorAll(".error-message").forEach((el) => (el.style.display = "none"));
             
@@ -126,7 +126,7 @@
           });
         
       }  catch (err) {
-            console.error("❌ Unexpected Error:", err);
+            logger.info("❌ Unexpected Error:", err);
             document.querySelector("#payment-error").innerText = "An unexpected error occurred. Please try again.";
         }
 

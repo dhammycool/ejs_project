@@ -1,7 +1,7 @@
 // 🌍 Core & Third-Party Modules
 import express from "express";
 import session from "express-session";
-import bodyParser from "body-parser";
+import bodyParser from "body-parser"
 import methodOverride from "method-override";
 import helmet from "helmet";
 import cors from "cors";
@@ -20,14 +20,12 @@ import nodemailer from "nodemailer";
 import rateLimit from "express-rate-limit";
 import { body, validationResult } from "express-validator";
 import logger from "./middlewares/logger.js";
+import morgan from "morgan";
 
 // 🔐 Auth
 import passport from "./middlewares/auths.js";
-import { Strategy } from "passport-local";
-import GoogleStrategy from "passport-google-oauth20";
-
 // 📦 App Routes & Config
-import db from "./config/db.js";
+import pool from "./config/db.js";
 import router from "./routes/auth.js";
 import paymentRouter from "./routes/payments.js";
 import { handleWebhook } from "./controllers/paymentControllers.js";
@@ -80,7 +78,7 @@ app.use(
         "https://api.stripe.com",
         "https://checkout.stripe.com",
          process.env.CLIENT_URL,
-         process.env.CLIENT_URL_ALT,// ✅ your ngrok domain
+         process.env.CLIENT_URL_ALT,
       ],
       styleSrc: [
         "'self'",
@@ -119,42 +117,43 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 86400000,
-    secure: false,
+    secure: process.env.NODE_ENV==='production',
     httpOnly: true,
-    sameSite: "lax"
+    sameSite: "strict",
+    maxAge: 1000 * 60 * 60 * 24,
   }
 }));
 
 
-//wil latter update this back
 
-//secure: process.env.NODE_ENV ==="production",
-//httpOnly: true,
-//sameSite: "strict"
-// 🔐 Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// 💉 CSRF - After session & bodyParser
-const csrfProtection = csurf();
+const csrfProtection = csurf({cookie:true});
 
 
-// 💉 CSRF - After session & bodyParser
+
 app.use((req, res, next) => {
-  if ( req.path === "/auth/login") {
+  
+  const method=req.method;
+  const path=req.path;
+const isEdit=/^\/services\/[^\/]+\/edit$/.test(path) ;
+const isSubmit= method ==='PUT' && /^\/services\/[^\/]+$/.test(path);
+
+  if ( path=== "/auth/login" || path==="/get/services/show"   || path==="/services/show" || isEdit || isSubmit)
+   {
     return next();
   }
   csrfProtection(req, res, next);
 });
 
-// 📍 Make token available in views
+
 app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken ? req.csrfToken() : null;
   next();
 });
 
-// 📍 Custom MIME type for JS
+
 app.use((req, res, next) => {
   if (req.url.endsWith(".js")) {
     res.type("application/javascript");
@@ -162,7 +161,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// 🔒 Enforce HTTPS in production
+if(process.env.NODE_ENV !=='production'){
+  app.use(morgan("dev"));
+}
+
 if (process.env.NODE_ENV === "production") {
   app.enable("trust proxy");
   app.use((req, res, next) => {
@@ -174,22 +176,18 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-
-// 🧑 Set user in views
 app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();
 });
 
-// 🛣️ Routes
+
 app.use("/", rout);
 app.use("/auth", router);
 app.use("/get", rout);
 app.use("/payments", paymentRouter);
 
 
-
-// ❗ CSRF Errors
 app.use((err, req, res, next) => {
   if (err.code === "EBADCSRFTOKEN") {
     return res.status(403).send("Invalid CSRF token");
@@ -197,16 +195,21 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-// ❗ Generic Error Handler
+
 app.use((err, req, res, next) => {
   logger.info(err.stack);
-  res.status(500).send("Something went wrong!");
+  if (process.env.NODE_ENV=== 'production'){
+    res.status(500).send("Something went wrong!");
+  }else{
+    res.status(500).send(`<pre>${err.stack}</pre>`);
+  }
+  
 });
 
-// 💥 Graceful Shutdown
+
 process.on("SIGINT", async () => {
   try {
-    await db.end();
+    await pool.end();
     logger.info("Database connection closed.");
     process.exit(0);
   } catch (err) {
@@ -217,7 +220,7 @@ process.on("SIGINT", async () => {
 
 process.on("SIGTERM", async () => {
   try {
-    await db.end();
+    await pool.end();
     logger.info("Database connection closed.");
     process.exit(0);
   } catch (err) {
@@ -226,7 +229,8 @@ process.on("SIGTERM", async () => {
   }
 });
 
-// 🚀 Start Server
-app.listen(process.env.port, () => {
-  logger.info(`Server running on port ${process.env.port}`);
+const PORT=process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  logger.info(`Server running on port ${PORT}`);
 });

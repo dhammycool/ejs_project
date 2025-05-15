@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "../middlewares/auths.js"; 
-import db from "../config/db.js";
+import pool from "../config/db.js";
 import bcrypt from "bcrypt";
 import { body, validationResult } from "express-validator"; 
 import {loginLimiter } from "../middlewares/midFunction.js";
@@ -59,7 +59,7 @@ router.post("/register", [
 
     try {
         // Check if user already exists
-        const search = await db.query("SELECT * FROM users WHERE email=$1", [username]);
+        const search = await pool.query("SELECT * FROM users WHERE email=$1", [username]);
         if (search.rows.length > 0) {
             return res.render("register.ejs", {
                  regError: "User already exists, kindly log in.",
@@ -70,7 +70,7 @@ router.post("/register", [
         const hashedPassword = await bcrypt.hash(password, 12);
 
         // Insert user into the database
-        const result = await db.query(
+        const result = await pool.query(
             "INSERT INTO users (email, password, name) VALUES ($1, $2, $3) RETURNING *",
             [username, hashedPassword, name]
         );

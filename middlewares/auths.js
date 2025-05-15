@@ -3,13 +3,13 @@ import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
-import db from "../config/db.js";  
+import pool from "../config/db.js";  
 import logger from "../middlewares/logger.js";
 
 passport.use(new Strategy(async function verify(username, password, cb) {
     try {
     
-        const check = await db.query("SELECT * FROM users WHERE email=$1", [username]);
+        const check = await pool.query("SELECT * FROM users WHERE email=$1", [username]);
 
       
         if (check.rows.length === 0) {
@@ -42,7 +42,7 @@ passport.serializeUser((user,cb)=>{
 
 passport.deserializeUser(async (id, cb) => {
     try {
-        const result = await db.query("SELECT * FROM users WHERE id = $1", [id]);
+        const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
         if (result.rows.length === 0) {
             return cb(null, false); 
         }
