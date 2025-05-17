@@ -2,7 +2,7 @@ import express from "express";
 import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import pool from "../config/db.js";  
 import logger from "../middlewares/logger.js";
 

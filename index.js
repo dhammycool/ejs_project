@@ -1,4 +1,4 @@
-// 🌍 Core & Third-Party Modules
+
 import express from "express";
 import session from "express-session";
 import bodyParser from "body-parser"
@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 import env from "dotenv";
 import moment from "moment";
 import fs from "fs";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import https from "https";
 import axios from "axios";
 import Stripe from "stripe";
@@ -21,10 +21,7 @@ import rateLimit from "express-rate-limit";
 import { body, validationResult } from "express-validator";
 import logger from "./middlewares/logger.js";
 import morgan from "morgan";
-
-// 🔐 Auth
 import passport from "./middlewares/auths.js";
-// 📦 App Routes & Config
 import pool from "./config/db.js";
 import router from "./routes/auth.js";
 import paymentRouter from "./routes/payments.js";
@@ -32,8 +29,6 @@ import { handleWebhook } from "./controllers/paymentControllers.js";
 import rout from "./getRoute/get.js";
 
 
-
-// ✅ Environment
 env.config();
 const app = express();
 
@@ -45,7 +40,7 @@ app.post("/payments/webhook", express.raw({ type: "application/json" }), handleW
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// 🧠 View Engine
+
 app.set("view engine", "ejs");
 
 app.use(cors({
@@ -54,7 +49,7 @@ app.use(cors({
 }));
 
 
-// 🛡️ Helmet
+
 app.use(
     helmet({
       
@@ -94,24 +89,14 @@ app.use(
   })
  );
   
-
-// 🍪 Cookie Parser
 app.use(cookieParser());
-
-// 🧠 Body Parsers
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.text()); // For webhooks
+app.use(express.text()); 
 app.use(express.urlencoded({ extended: true }));
-
-// 📦 Static Files
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
-
-// 🧠 Method Override
 app.use(methodOverride("_method"));
-
-// 🔐 Session
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -123,16 +108,9 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24,
   }
 }));
-
-
-
 app.use(passport.initialize());
 app.use(passport.session());
-
 const csrfProtection = csurf({cookie:true});
-
-
-
 app.use((req, res, next) => {
   
   const method=req.method;

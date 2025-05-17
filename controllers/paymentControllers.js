@@ -46,11 +46,11 @@ export const handleWebhook = async (req, res) => {
         );
 
         if (!signature || !event) {
-            logger.info("⚠️ Webhook verification failed.");
+            logger.info(" Webhook verification failed.");
             return res.status(400).send("Invalid webhook signature");
         }
     } catch (err) {
-        logger.info("❌ Webhook signature verification failed:", err.message);
+        logger.info(" Webhook signature verification failed:", err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
@@ -65,7 +65,7 @@ export const handleWebhook = async (req, res) => {
     const status = paymentIntent.status;
 
     if (!appointment_id) {
-        logger.info("❌ No appointment ID found in metadata!");
+        logger.info("No appointment ID found in metadata!");
         return res.status(400).send("Missing appointment_id in metadata");
     }
 
@@ -94,7 +94,7 @@ export const handleWebhook = async (req, res) => {
             
             await pool.query("UPDATE appointments SET status ='success' WHERE id = $1", [appointment_id]);
 
-            logger.info(`✅ Payment status updated to Confirmed for appointment ${appointment_id}`);
+            logger.info(`Payment status updated to Confirmed for appointment ${appointment_id}`);
 
             const result = await pool.query(
                 `SELECT a.id, u.email, u.name
@@ -109,7 +109,7 @@ export const handleWebhook = async (req, res) => {
                 name = result.rows[0].name;
                 logger.info(email, name);
             } else {
-                logger.info("⚠️ Missed data: No user found for appointment.");
+                logger.info(" Missed data: No user found for appointment.");
             }
 
             
@@ -130,14 +130,14 @@ export const handleWebhook = async (req, res) => {
                 };
 
                 await transporter.sendMail(mailOptions);
-                  logger.info("✅ Email sent successfully!");
+                  logger.info(" Email sent successfully!");
             } catch (emailError) {
-                logger.info("❌ Error sending email:", emailError.message);
+                logger.info(" Error sending email:", emailError.message);
             }
 
             res.status(200).json({ received: true });
         } catch (err) {
-            logger.info("❌ Error processing webhook:", err);
+            logger.info(" Error processing webhook:", err);
             return res.status(500).json({ error: "Failed to update appointment status" });
         }
     } else if (eventType === "payment_intent.payment_failed") {
@@ -147,7 +147,7 @@ export const handleWebhook = async (req, res) => {
         res.status(200).json({ success: false, message: "Payment failed", appointment_id });
         return;
     } else {
-        logger.info(`⚠️ Unhandled event type: ${eventType}`);
+        logger.info(` Unhandled event type: ${eventType}`);
         return res.status(400).send("Unhandled event type");
     }
 };

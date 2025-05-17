@@ -71,7 +71,7 @@ rout.get("/receipt",  async (req, res) => {
        res.render("receipt.ejs", { record: result, payments, userName });
 
     } catch (error) {
-        logger.info("❌ Error fetching payments:", error);
+        logger.info(" Error fetching payments:", error);
         res.status(500).send("Server Error");
     }
 });

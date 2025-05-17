@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "../middlewares/auths.js"; 
 import pool from "../config/db.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { body, validationResult } from "express-validator"; 
 import {loginLimiter } from "../middlewares/midFunction.js";
 import csrfProtection from "csurf";
