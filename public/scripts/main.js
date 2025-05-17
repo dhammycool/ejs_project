@@ -1,5 +1,5 @@
 
-import logger from "../middlewares/logger.js";
+
     
     document.addEventListener("DOMContentLoaded", async () => {
 
@@ -14,15 +14,15 @@ import logger from "../middlewares/logger.js";
       const amount = parseInt(document.getElementById("amount")?.value.trim(), 10);
 
       if (!amount || isNaN(amount)) {
-        logger.info("🚨 No valid amount found!");
+        console.error("🚨 No valid amount found!");
         return;
     }
 
-    logger.info("📨 Sending data:", { appointment_id, amount });
+    console.error("📨 Sending data:", { appointment_id, amount });
     
   
       try {
-          const response = await fetch("https://9e9f-2a02-c7c-86ce-d800-c199-3136-4ae8-b877.ngrok-free.app/payments/create-payment-intent", {
+          const response = await fetch("https://4e73-2a02-c7c-86ce-d800-782c-d432-738d-a587.ngrok-free.app/payments/create-payment-intent", {
               method: "POST",
               headers: { 
                 "Content-Type": "application/json",
@@ -64,19 +64,19 @@ import logger from "../middlewares/logger.js";
               const { error, paymentIntent } = await stripe.confirmPayment({
                    elements,
                    confirmParams: {
-                      return_url:`https://9e9f-2a02-c7c-86ce-d800-c199-3136-4ae8-b877.ngrok-free.app/payment-success`,
+                      return_url:`https://4e73-2a02-c7c-86ce-d800-782c-d432-738d-a587.ngrok-free.app/payment-success`,
                   },
               });
 
           
             if (paymentIntent && paymentIntent.status === "succeeded") {
-                logger.info("✅ Payment succeeded, redirecting...");
+                console.error("✅ Payment succeeded, redirecting...");
                 window.location.href = `/get/payment-success?payment_intent=${paymentIntent.id}`;
                 return;
             }
             
             if (paymentIntent && paymentIntent.status === "requires_payment_method") {
-                logger.info("❌ Payment failed:", paymentIntent);
+                console.error("❌ Payment failed:", paymentIntent);
             
                 document.querySelector("#general-error").innerText =
                     "Payment failed. Please try again with a different card.";
@@ -84,10 +84,10 @@ import logger from "../middlewares/logger.js";
                 return;
             }
             if (error) {
-                logger.info("❌ Payment Error:", error);
-                logger.info("🔍 Error Type:", error.type);
-                logger.info("🔍 Error Code:", error.code);
-                logger.info("🔍 Error Message:", error.message);
+                console.error("❌ Payment Error:", error);
+               console.error("🔍 Error Type:", error.type);
+                console.error("🔍 Error Code:", error.code);
+                console.error("🔍 Error Message:", error.message);
             
                 document.querySelectorAll(".error-message").forEach((el) => (el.style.display = "none"));
             
@@ -126,7 +126,7 @@ import logger from "../middlewares/logger.js";
           });
         
       }  catch (err) {
-            logger.info("❌ Unexpected Error:", err);
+            console.error("❌ Unexpected Error:", err);
             document.querySelector("#payment-error").innerText = "An unexpected error occurred. Please try again.";
         }
 

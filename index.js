@@ -44,8 +44,8 @@ const __dirname = dirname(__filename);
 app.set("view engine", "ejs");
 
 app.use(cors({
-  origin: process.env.CLIENT_URL_ALT,
-  credentials: true,
+origin: [process.env.CLIENT_URL_ALT,"https://4e73-2a02-c7c-86ce-d800-782c-d432-738d-a587.ngrok-free.app"],
+ credentials: true,
 }));
 
 
@@ -74,6 +74,7 @@ app.use(
         "https://checkout.stripe.com",
          process.env.CLIENT_URL,
          process.env.CLIENT_URL_ALT,
+         "https://4e73-2a02-c7c-86ce-d800-782c-d432-738d-a587.ngrok-free.app",
       ],
       styleSrc: [
         "'self'",

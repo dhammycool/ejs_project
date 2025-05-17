@@ -45,7 +45,6 @@ router.post("/register", [
     body("username").isEmail().withMessage("Enter a valid email"),
     body("password").isLength({ min: 8 }).withMessage("Password must be at least 8 characters"),
 ], async (req, res) => {
-    // Validate input fields
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.render("register.ejs", { 
@@ -54,11 +53,9 @@ router.post("/register", [
              });
     }
 
-    // Destructure user details from the request body
     const { username, password, name } = req.body;
 
     try {
-        // Check if user already exists
         const search = await pool.query("SELECT * FROM users WHERE email=$1", [username]);
         if (search.rows.length > 0) {
             return res.render("register.ejs", {
@@ -66,19 +63,12 @@ router.post("/register", [
                  });
         }
 
-        // Hash the password before storing
         const hashedPassword = await bcrypt.hash(password, 12);
-
-        // Insert user into the database
         const result = await pool.query(
             "INSERT INTO users (email, password, name) VALUES ($1, $2, $3) RETURNING *",
             [username, hashedPassword, name]
         );
-
-        // Get the newly created user from the result
         const user = result.rows[0];
-
-        // Log the user in after successful registration
         req.login(user, (err) => {
             if (err) {
                 return res.render("register.ejs", {
