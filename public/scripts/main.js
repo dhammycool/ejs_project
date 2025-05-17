@@ -6,9 +6,6 @@
         if (!document.getElementById("payment-form")) {
             return;
         }
-
-        const stripe = Stripe("pk_test_51QfSZvGzl6v4hn3sPfn2SIluL1MErCygtzSYEOlonBSB2cQ2eDXv5yHSqNGC01Xai8IeB9GaurWxkDnkauFq8RH000Qoew6ZO5");
-
     
       const appointment_id = document.getElementById("appoint")?.value || "";
       const amount = parseInt(document.getElementById("amount")?.value.trim(), 10);
@@ -22,7 +19,7 @@
     
   
       try {
-          const response = await fetch("https://4e73-2a02-c7c-86ce-d800-782c-d432-738d-a587.ngrok-free.app/payments/create-payment-intent", {
+          const response = await fetch("https://dj-romeo.onrender.com/payments/create-payment-intent", {
               method: "POST",
               headers: { 
                 "Content-Type": "application/json",
@@ -41,7 +38,8 @@
               throw new Error(`Server error: ${response.statusText}`);
           }
   
-          const { clientSecret } = await response.json();
+          const { clientSecret,publishableKey } = await response.json();
+          const stripe=Stripe(publishableKey);
 
          
 
@@ -64,7 +62,7 @@
               const { error, paymentIntent } = await stripe.confirmPayment({
                    elements,
                    confirmParams: {
-                      return_url:`https://4e73-2a02-c7c-86ce-d800-782c-d432-738d-a587.ngrok-free.app/payment-success`,
+                      return_url:`https://dj-romeo.onrender.com/payment-success`,
                   },
               });
 

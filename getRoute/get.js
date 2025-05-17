@@ -168,8 +168,6 @@ rout.get("/services",csrfProtection, async (req,res) => {
             const result= await pool.query('SELECT * FROM services');
             const check=result.rows;
             const token=req.csrfToken();
-            console.log("service:",token);
-           
             res.render("services.ejs",{
                 services:check,
                 user:req.user,

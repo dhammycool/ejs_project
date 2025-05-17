@@ -9,6 +9,7 @@ import logger from "../middlewares/logger.js";
 dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
 export const createPaymentIntent = async (req, res) => {
     
     try {
@@ -24,7 +25,10 @@ export const createPaymentIntent = async (req, res) => {
             metadata: { appointment_id: appointment_id },
         });
 
-        res.json({ clientSecret: paymentIntent.client_secret });
+        res.json({ 
+            clientSecret: paymentIntent.client_secret,
+            publishableKey:process.env.STRIPE_PUBLISHABLE_KEY
+         });
     } catch (error) {
         logger.info("Error creating payment intent:", error);
         res.status(500).json({ error: "Error creating payment intent" });
