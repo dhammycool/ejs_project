@@ -754,41 +754,40 @@ textarea{
   color:red;
 }
 
-@media (max-width:600px){
-
-  .head{
+@media (max-width: 600px) {
+  .head {
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     font-size: 15px;
-    
-}
-.nav{
-  flex-direction: column;
-  
-}
-.nav li{
-  text-align:left;
-}
-
-.contact {
-width: 80%;
-}
-
-.media{
-  flex-direction: column;
-}
-
-#user_pagee{
-width:100%;
-max-width: 100%;
-overflow: auto;
-}
-
-table{
-  width:100%;
-  max-width: 100%;
-  overflow: auto;
   }
 
+  .nav {
+    flex-direction: column;
+  }
 
+  .nav li {
+    text-align: left;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .contact {
+    width: 80%;
+  }
+
+  .media {
+    flex-direction: column;
+  }
+
+  #user_pagee {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+  }
 }
