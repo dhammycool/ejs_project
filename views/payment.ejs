@@ -26,11 +26,18 @@
            
             <label for="service_name">Service Name</label>
             <input type="text"  class="Element" id="service_name"  name="service_name" value="<%=appointments.service_name%>" readonly>
+
+            <label for="user_email">User Email</label>
+            <input type="email" class="Element" id="email_add" name="user_email" value="<%= appointments.user_email %>">
               
            
             <label for="price">Service Amount</label>
             <input class="Element" id="amount"  type="text" name="price" value="<%=appointments.service_price%> "readonly>
-            
+            <select id="payment-method">
+                 <option value="paystack">Paystack</option>
+                <option value="stripe">Stripe</option>
+            </select>
+
          <div id="payment-element">
 
          </div>

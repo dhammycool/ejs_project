@@ -261,7 +261,13 @@ rout.get("/payment/:appointment_id", async (req,res) => {
         logger.info("missing id");
     }
     try{
-        const result=await pool.query(`SELECT a.id AS appointment_id, s.name AS service_name, s.price AS service_price FROM appointments a  JOIN services s on  a.service_id=s.id WHERE a.id=$1`,[appointment_id]);
+        const result=await pool.query(`
+            SELECT a.id AS appointment_id, s.name AS service_name, u.email AS User_email , s.price AS service_price FROM appointments a 
+             JOIN services s on  a.service_id=s.id 
+             Join users u on a.user_id= u.id
+
+             WHERE a.id=$1`,
+             [appointment_id]);
         if(result.rows.length===0){
           return res.status(400).send("No Appointment found");
         }

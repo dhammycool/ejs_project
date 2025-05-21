@@ -10,6 +10,8 @@ dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+
+// stripe payment intent
 export const createPaymentIntent = async (req, res) => {
     
     try {
@@ -35,6 +37,10 @@ export const createPaymentIntent = async (req, res) => {
     }
 }; 
 
+
+
+
+// stripe webhook
 export const handleWebhook = async (req, res) => {
    
     const signature = req.headers["stripe-signature"];
