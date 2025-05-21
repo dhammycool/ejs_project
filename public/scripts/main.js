@@ -19,10 +19,8 @@
 
     console.error("📨 Sending data:", { appointment_id, amount, email});
     
-  if(paymentMethod==="paystack"){
-    
-  }
-  elseif(paymentMethod=="stripe"){
+
+   if(paymentMethod=="stripe"){
     
       try {
           const response = await fetch("https://dj-romeo.onrender.com/payments/create-payment-intent", {
@@ -133,6 +131,9 @@
             console.error("❌ Unexpected Error:", err);
             document.querySelector("#payment-error").innerText = "An unexpected error occurred. Please try again.";
         }
+
+    }
+    else if(paymentMethod==="paystack"){
 
   }
 
