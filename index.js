@@ -61,7 +61,8 @@ app.use(
         "'self'",
         "https://apis.google.com",
         "https://js.stripe.com",
-        "https://js.paystack.co"
+        "https://js.paystack.co",
+        "unsafe inline"
       ],
       frameSrc: [
         "'self'",
@@ -73,12 +74,14 @@ app.use(
         "https://api.stripe.com",
         "https://checkout.stripe.com",
         "https://js.paystack.co",
+        "unsafe inline",
          process.env.CLIENT_URL,
          process.env.CLIENT_URL_ALT,
       ],
       styleSrc: [
         "'self'",
-        "https://fonts.googleapis.com"
+        "https://fonts.googleapis.com",
+        "unsafe inline",
       ],
       imgSrc: ["'self'", "data:"],
      
