@@ -6,6 +6,7 @@
         if (!document.getElementById("payment-form")) {
             return;
         }
+
     
       const appointment_id = document.getElementById("appoint")?.value || "";
       const amount = parseInt(document.getElementById("amount")?.value.trim(), 10);
@@ -23,18 +24,24 @@
    if(paymentMethod=="stripe"){
     
       try {
+
+        
           const response = await fetch("https://dj-romeo.onrender.com/payments/create-payment-intent", {
               method: "POST",
+
               headers: { 
                 "Content-Type": "application/json",
                 "CSRF-TOKEN":document.querySelector('#payment-form input[name="_csrf"').value,
                 
              },
+
               body: JSON.stringify({ 
                 appointment_id,
                  amount,
                   currency: "ngn"
                  }),
+
+
             
           });
   
@@ -46,7 +53,6 @@
           const stripe=Stripe(publishableKey);
 
          
-
           if (!clientSecret) {
               throw new Error("No client secret received");
           }
@@ -132,8 +138,7 @@
             document.querySelector("#payment-error").innerText = "An unexpected error occurred. Please try again.";
         }
 
-    }
-    else if(paymentMethod==="paystack"){
+    }else if(paymentMethod==="paystack"){
 
   }
 
