@@ -37,7 +37,36 @@ export const createPaymentIntent = async (req, res) => {
     }
 }; 
 
+// paystack back end
 
+export const paystackTrans= ("/paystack/create-transaction", async (req, res) => {
+  const { amount, email, appointment_id } = req.body;
+
+  try {
+    const response = await axios.post(
+      "https://api.paystack.co/transaction/initialize",
+      {
+        amount: amount * 100, 
+        email,
+        metadata: {
+          appointment_id,
+        },
+        callback_url: "https://dj-romeo.onrender.com/payment-success",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    res.json({ url: response.data.data.authorization_url });
+  } catch (err) {
+    console.error("Paystack init error", err.response?.data || err.message);
+    res.status(500).json({ error: "Failed to initiate Paystack transaction" });
+  }
+});
 
 
 // stripe webhook

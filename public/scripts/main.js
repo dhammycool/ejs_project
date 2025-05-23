@@ -128,7 +128,26 @@ if(paymentMethod==="stripe"){
         }
 
 }else if(paymentMethod==="paystack"){
-console.error("nothing yet");
+try {
+    const response = await fetch("https://dj-romeo.onrender.com/payments/paystack/create-transaction", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "CSRF-TOKEN":document.querySelector('#payment-form input[name="_csrf"').value,
+      },
+      body: JSON.stringify({ appointment_id, amount, email }),
+    });
+
+    const data = await response.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert("Could not generate Paystack payment URL.");
+    }
+  } catch (err) {
+    console.error("Paystack Error:", err);
+  }
 }
 
      })  
