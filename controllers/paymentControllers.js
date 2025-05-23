@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer"; 
 import pool from "../config/db.js"; 
 import logger from "../middlewares/logger.js";
+import axios from "axios";
 
 
 
