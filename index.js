@@ -62,26 +62,29 @@ app.use(
         "https://apis.google.com",
         "https://js.stripe.com",
         "https://js.paystack.co",
-        "unsafe inline"
+        "'unsafe-inline'"
       ],
       frameSrc: [
         "'self'",
-        "https://js.stripe.com"
+        "https://js.stripe.com",
+        "https://checkout.paystack.com"
       ],
       connectSrc: [
-        "'self'","*",
+        "'self'",
+        "*",
         "https://js.stripe.com",
         "https://api.stripe.com",
         "https://checkout.stripe.com",
         "https://js.paystack.co",
-        "unsafe inline",
          process.env.CLIENT_URL,
          process.env.CLIENT_URL_ALT,
       ],
       styleSrc: [
         "'self'",
         "https://fonts.googleapis.com",
-        "unsafe inline",
+        "https://paystack.com",
+        "'unsafe-inline'"
+      
       ],
       imgSrc: ["'self'", "data:"],
      

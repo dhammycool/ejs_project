@@ -1,50 +1,35 @@
-
-
-    
     document.addEventListener("DOMContentLoaded", async () => {
 
-        if (!document.getElementById("payment-form")) {
-            return;
-        }
+     const form=document.getElementById("payment-form");
+     if (!form) return;
 
-    const form = document.getElementById("payment-form");
-          form.addEventListener("submit", async (event) => {
-              event.preventDefault();
+     form.addEventListener("submit",async(event)=>{
+        event.preventDefault();
 
       const appointment_id = document.getElementById("appoint")?.value || "";
       const amount = parseInt(document.getElementById("amount")?.value.trim(), 10);
       const email=document.getElementById("email_add")?.value.trim();
-      const paymentMethod=document.getElementById("payment-method")?.value;
+      const paymentMethod=document.getElementById("payment-method").value;
 
-      if (!amount || isNaN(amount) || !email) {
-        console.error("No record found!");
+      if (!amount || isNaN(amount)) {
+        console.error("🚨 No valid amount found!");
         return;
     }
-
-    console.error("📨 Sending data:", { appointment_id, amount, email});
-    
-
-   if(paymentMethod=="stripe"){
-    
-      try {
-
-
+    console.error("📨 Sending data:", { appointment_id, amount });
+if(paymentMethod==="stripe"){
+     try {
           const response = await fetch("https://dj-romeo.onrender.com/payments/create-payment-intent", {
               method: "POST",
-
               headers: { 
                 "Content-Type": "application/json",
                 "CSRF-TOKEN":document.querySelector('#payment-form input[name="_csrf"').value,
                 
              },
-
               body: JSON.stringify({ 
                 appointment_id,
                  amount,
                   currency: "ngn"
                  }),
-
-
             
           });
   
@@ -56,6 +41,7 @@
           const stripe=Stripe(publishableKey);
 
          
+
           if (!clientSecret) {
               throw new Error("No client secret received");
           }
@@ -66,6 +52,11 @@
   
           const paymentElement = elements.create("payment");
           paymentElement.mount("#payment-element");
+  
+          
+          const form = document.getElementById("payment-form");
+          form.addEventListener("submit", async (event) => {
+              event.preventDefault();
   
               const { error, paymentIntent } = await stripe.confirmPayment({
                    elements,
@@ -129,19 +120,16 @@
                         break;
                 }
             }
-         
-    
+          });
+        
       }  catch (err) {
             console.error("❌ Unexpected Error:", err);
             document.querySelector("#payment-error").innerText = "An unexpected error occurred. Please try again.";
         }
 
-    }else if(paymentMethod==="paystack"){
-
+}else if(paymentMethod==="paystack"){
+console.error("nothing yet");
 }
-  });    
-  });
-  
 
-           
-    
+     })  
+  });
