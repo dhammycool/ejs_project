@@ -120,6 +120,51 @@ rout.get("/payment-success", async (req, res) => {
 });
 
 
+rout.get("/payment-success-receipt", async (req, res) => {
+
+ if (!req.isAuthenticated()) {
+        return res.redirect("/register");
+    }
+
+    const reference = req.query.reference;
+    if (!reference) {
+        return res.status(400).send("No payment reference provided.");
+    }
+
+    try {
+        const { data } = await axios.get(`https://api.paystack.co/transaction/verify/${reference}`, {
+            headers: {
+                Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+            },
+        });
+
+        const paymentData = data.data;
+
+        if (paymentData.status === "success") {
+            const amount = (paymentData.amount / 100).toFixed(2);
+            const currency = paymentData.currency;
+            const payment_method = paymentData.channel;
+            const status=paymentData.status;
+            const payment_id = paymentData.metadata?.appointment_id || "Unknown";
+
+            return res.render("success.ejs", {
+                amount,
+                currency,
+                payment_method,
+                status,
+                payment_id
+            });
+        } else {
+            return res.status(400).send("Payment not successful.");
+        }
+    } catch (error) {
+        logger.info("💥 Error verifying Paystack payment:", error);
+        res.status(500).send("Internal server error");
+    }
+});
+
+
+
 rout.get("/register",(req, res) => {
     const token=req.csrfToken();
     
