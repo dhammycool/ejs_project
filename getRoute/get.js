@@ -121,11 +121,6 @@ rout.get("/payment-success", async (req, res) => {
 
 
 rout.get("/payment-success-receipt", async (req, res) => {
-
- if (!req.isAuthenticated()) {
-        return res.redirect("/register");
-    }
-
     const reference = req.query.reference;
     if (!reference) {
         return res.status(400).send("No payment reference provided.");
@@ -139,6 +134,7 @@ rout.get("/payment-success-receipt", async (req, res) => {
         });
 
         const paymentData = data.data;
+        console.log(paymentData);
 
         if (paymentData.status === "success") {
             const amount = (paymentData.amount / 100).toFixed(2);
