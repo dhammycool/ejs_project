@@ -134,7 +134,6 @@ rout.get("/payment-success-receipt", async (req, res) => {
         });
 
         const paymentData = data.data;
-        console.log(paymentData);
 
         if (paymentData.status === "success") {
             const amount = (paymentData.amount / 100).toFixed(2);
@@ -154,7 +153,7 @@ rout.get("/payment-success-receipt", async (req, res) => {
             return res.status(400).send("Payment not successful.");
         }
     } catch (error) {
-        logger.info("💥 Error verifying Paystack payment:", error);
+        logger.info(" Error verifying Paystack payment:", error);
         res.status(500).send("Internal server error");
     }
 });
