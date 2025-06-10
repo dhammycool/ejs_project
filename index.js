@@ -25,7 +25,7 @@ import passport from "./middlewares/auths.js";
 import pool from "./config/db.js";
 import router from "./routes/auth.js";
 import paymentRouter from "./routes/payments.js";
-import { handleWebhook } from "./controllers/paymentControllers.js";
+import { handleWebhook,handlePaystackWebhook } from "./controllers/paymentControllers.js";
 import rout from "./getRoute/get.js";
 
 
@@ -35,6 +35,7 @@ const app = express();
 const stripe=new Stripe(process.env.STRIPE_SECRET_KEY);
 
 app.post("/payments/webhook", express.raw({ type: "application/json" }), handleWebhook);
+app.post("/payments/webhook", express.raw({ type:"application/json"}),handlePaystackWebhook);
 
 
 const __filename = fileURLToPath(import.meta.url);
