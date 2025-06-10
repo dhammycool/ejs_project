@@ -1,0 +1,58 @@
+
+A full-stack web application that allows users to book DJ services, securely make payments using Stripe or Paystack, and receive real-time feedback on booking status. 
+Built for production-readiness with emphasis on authentication, security, and user experience.
+
+** Booking Workflow **
+
+.Dynamic service selection with real-time pricing.
+
+.Email capture and appointment ID generation.
+
+.Stores appointment records securely in Postgres.
+
+** Payment Integration **
+
+.Stripe: Secure card payments with hosted payment elements and webhooks.
+
+.Paystack: Supports Nigerian card payments, bank transfers, and USSD.
+
+.Redirects to custom payment success pages with receipt summary.
+
+** Authentication **
+
+.Registration & login using Passport.js.
+
+.Session-based login persistence.
+
+.Access control to protect private pages (e.g., /payment-success-receipt).
+
+** Security Measures **
+
+.helmet() to enforce secure HTTP headers.
+
+.Custom Content Security Policy (CSP) to whitelist Stripe, Paystack, and font CDNs.
+
+.CSRF token protection on payment forms.
+
+.Input validation and error handling throughout the application.
+
+** Key Learning Points**
+
+.Deep understanding of payment flows, from frontend form handling to backend verification.
+
+.Managing middleware layers in Express with proper routing and modular structure.
+
+.Writing secure, production-ready Node.js applications.
+
+.Implementing client-server communication using fetch(), JSON, and REST APIs.
+
+.Debugging real-world issues (CSP errors, environment-specific bugs, async/await flows).
+
+ ** About the Developer **
+Odetunde Oluwadamilare.
+
+.Passionate full-stack developer with hands-on experience building real-world Node.js applications.
+
+.Now open to job opportunities in backend, full-stack, or junior dev roles.
+
+.Committed to clean code, scalable systems, and real problem-solving.
