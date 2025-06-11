@@ -130,7 +130,7 @@ rout.get("/payment-success-receipt", async (req, res) => {
     try {
         const { data } = await axios.get(`https://api.paystack.co/transaction/verify/${reference}`, {
             headers: {
-                Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+                Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
             },
         });
 
