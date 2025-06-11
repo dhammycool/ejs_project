@@ -3,13 +3,13 @@ import { createPaymentIntent, handleWebhook, paystackTrans,handlePaystackWebhook
 
 
 const paymentRouter = express.Router();
-
-
+paymentRouter.post("/webhook/paystack", express.json(),handlePaystackWebhook);
+paymentRouter.post("/webhook/stripe", express.raw({ type: "application/json" }), handleWebhook);
 
 paymentRouter.post("/create-payment-intent", createPaymentIntent);
 paymentRouter.post("/paystack/create-transaction",paystackTrans);
-paymentRouter.post("/webhook", express.raw({ type: "application/json" }), handleWebhook);
-paymentRouter.post("/webhook", express.json(),handlePaystackWebhook);
+
+
 
 
 

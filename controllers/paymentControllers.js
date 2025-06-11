@@ -212,7 +212,7 @@ export const handlePaystackWebhook = async (req, res) => {
  
   let event;
   try {
-    event = JSON.parse(req.body);
+    event = req.body;
   } catch (err) {
     logger.info("Failed to parse webhook body:", err.message);
     return res.status(400).send("Invalid webhook payload");

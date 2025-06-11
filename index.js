@@ -34,9 +34,6 @@ const app = express();
 
 const stripe=new Stripe(process.env.STRIPE_SECRET_KEY);
 
-app.post("/payments/webhook/stripe", express.raw({ type: "application/json" }), handleWebhook);
-app.post("/payments/webhook/paystack", express.json(),handlePaystackWebhook);
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
