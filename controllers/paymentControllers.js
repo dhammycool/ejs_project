@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 import pool from "../config/db.js"; 
 import logger from "../middlewares/logger.js";
 import axios from "axios";
-import cyrpto from 'crypto';
+import {createHmac} from "node:crypto";
 
 
 
@@ -200,9 +200,8 @@ export const handlePaystackWebhook = async (req, res) => {
   const paystackSecret = process.env.PAYSTACK_SECRET_KEY;
 
   const signature = req.headers["x-paystack-signature"];
-  const hash = crypto
-    .createHmac("sha512", paystackSecret)
-    .update(req.body)
+  const hash = createHmac("sha512", paystackSecret)
+    .update(JSON.stringify(req.body))
     .digest("hex");
 
   if (hash !== signature) {
