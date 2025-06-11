@@ -55,7 +55,7 @@ export const paystackTrans= ("/paystack/create-transaction", async (req, res) =>
         metadata: {
           appointment_id,
         },
-        callback_url: "https://dj-romeo.onrender.com/get/payment-success-receipt?",
+        callback_url: "https://dj-romeo.onrender.com/get/payment-success-receipt",
       },
       {
         headers: {
